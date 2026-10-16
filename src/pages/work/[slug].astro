@@ -1,0 +1,112 @@
+---
+import Layout from '../../components/Layout.astro';
+import GlassLink from '../../components/GlassLink';
+import Arrow from '../../components/Arrow.astro';
+import ProjectVisual from '../../components/ProjectVisual.astro';
+import { projects, type Project } from '../../data/portfolio';
+export function getStaticPaths() {
+  return projects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+interface Props {
+  project: Project;
+  next: Project;
+}
+const { project, next } = Astro.props;
+---
+
+<Layout title={`${project.name} — Yatin Rajesh`} description={project.summary}>
+  <main id="main" class="case-study">
+    <header class="case-header container" id="top">
+      <a href="/#work" class="text-link">
+        ← Selected work
+      </a>
+      <div class="case-title-row">
+        <div>
+          <p class="eyebrow">
+            {project.number} / {project.category}
+          </p>
+          <h1>
+            {project.name}
+            <span>.</span>
+          </h1>
+        </div>
+        <span class="case-year">{project.year}</span>
+      </div>
+      <p class="case-deck">{project.summary}</p>
+      <div class="case-info">
+        <div>
+          <span class="eyebrow">MY INVOLVEMENT</span>
+          <p>{project.role}</p>
+        </div>
+        <div>
+          <span class="eyebrow">BUILT WITH</span>
+          <p>{project.stack.join(' · ')}</p>
+        </div>
+        <GlassLink href={project.repo} label="View repository" external client:load />
+        {project.live && (
+          <a href={project.live} target="_blank" rel="noopener noreferrer" class="text-link">
+            Project website <Arrow />
+          </a>
+        )}
+      </div>
+    </header>
+    <div class="container case-visual">
+      <ProjectVisual project={project} />
+    </div>
+    <div class="container case-highlights">
+      {project.highlights.map((highlight) => (
+        <div>
+          <strong>{highlight.value}</strong>
+          <span>{highlight.label}</span>
+        </div>
+      ))}
+    </div>
+    <div class="container case-body">
+      <aside>
+        <p class="eyebrow">PROJECT NOTES</p>
+        <span>{project.number} / 04</span>
+      </aside>
+      <div>
+        <section>
+          <p class="eyebrow">THE STARTING POINT</p>
+          <h2>
+            {project.slug === 'kinemation'
+              ? 'A frame is only part of the story.'
+              : 'A problem worth exploring.'}
+          </h2>
+          <p>{project.problem}</p>
+        </section>
+        <section>
+          <p class="eyebrow">THE APPROACH</p>
+          <h2>From question to implementation.</h2>
+          <ol class="approach-list">
+            {project.approach.map((item, i) => (
+              <li>
+                <span>0{i + 1}</span>
+                <p>{item}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+        <section>
+          <p class="eyebrow">WHERE IT LED</p>
+          <h2>What came out of it.</h2>
+          <p>{project.outcome}</p>
+          <a href={project.repo} target="_blank" rel="noopener noreferrer" class="text-link">
+            Explore the code and documentation <Arrow />
+          </a>
+        </section>
+      </div>
+    </div>
+    <a href={`/work/${next.slug}/`} class="next-project container">
+      <div>
+        <span class="eyebrow">NEXT EXPLORATION / {next.number}</span>
+        <h2>{next.name}</h2>
+      </div>
+      <Arrow />
+    </a>
+  </main>
+</Layout>

@@ -1,0 +1,206 @@
+---
+import type { Project } from '../data/portfolio';
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+---
+
+<div class:list={['project-visual', `visual-${project.visual}`]}>
+  <div class="visual-topline">
+    <span>{project.category.split(' / ')[0]}</span>
+    <span aria-hidden="true">↗</span>
+  </div>
+  {project.visual === 'server' && (
+    <div class="server-window">
+      <div class="window-chrome">
+        <span>
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
+        <span>tinarchy / control center</span>
+        <span>●</span>
+      </div>
+      <img
+        src="/images/tinarchy.webp"
+        srcset="/images/tinarchy-480.webp 480w, /images/tinarchy-800.webp 800w, /images/tinarchy.webp 1400w"
+        sizes="(max-width: 760px) 85vw, 700px"
+        alt="Tinarchy dashboard showing live system telemetry and self-hosted service controls"
+        width="1400"
+        height="875"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  )}
+  {project.visual === 'security' && (
+    <svg class="security-diagram" viewBox="0 0 600 330" fill="none" aria-hidden="true">
+      <g stroke="#5c758e" stroke-width="1">
+        <path d="M92 165h77m94 0h60m-107-30V68h107m-107 125v70h107m102-195h65v97h-65m0 98h65v-98h45" />
+        <path d="M370 96v41m0 56v42" stroke-dasharray="4 5" />
+      </g>
+      <g fill="#182635" stroke="#536f89">
+        <rect x="34" y="140" width="80" height="50" rx="3" />
+        <rect x="169" y="135" width="94" height="60" rx="3" />
+        <rect x="323" y="40" width="103" height="56" rx="3" />
+        <rect x="323" y="137" width="103" height="56" rx="3" />
+        <rect x="323" y="235" width="103" height="56" rx="3" />
+      </g>
+      <g fill="#cedfec" font-family="monospace" font-size="11" text-anchor="middle">
+        <text x="74" y="169">
+          sample
+        </text>
+        <text x="216" y="160">
+          ANALYZE
+        </text>
+        <text x="216" y="178" fill="#9bb5cd" font-size="9">
+          spectreflow
+        </text>
+        <text x="374" y="64">
+          STATIC
+        </text>
+        <text x="374" y="81" fill="#9bb5cd" font-size="9">
+          Radare2 / YARA
+        </text>
+        <text x="374" y="160">
+          DYNAMIC
+        </text>
+        <text x="374" y="177" fill="#9bb5cd" font-size="9">
+          runtime traces
+        </text>
+        <text x="374" y="258">
+          INTELLIGENCE
+        </text>
+        <text x="374" y="275" fill="#9bb5cd" font-size="9">
+          hash lookups
+        </text>
+      </g>
+      <circle cx="540" cy="165" r="28" fill="#a5d0ed" />
+      <path d="m529 165 8 8 14-17" stroke="#182635" stroke-width="2" />
+      <g fill="#a5d0ed">
+        <circle cx="147" cy="165" r="3" />
+        <circle cx="293" cy="165" r="3" />
+        <circle cx="490" cy="165" r="3" />
+      </g>
+    </svg>
+  )}
+  {project.visual === 'wifi' && (
+    <div class="wifi-scene" aria-hidden="true">
+      <div class="wifi-orbit orbit-1"></div>
+      <div class="wifi-orbit orbit-2"></div>
+      <div class="wifi-orbit orbit-3"></div>
+      <div class="wifi-phone">
+        <div class="phone-camera"></div>
+        <span class="phone-time">9:41</span>
+        <div class="wifi-icon">
+          <svg viewBox="0 0 64 50" fill="none">
+            <path
+              d="M5 14Q32-8 59 14M14 25Q32 9 50 25M24 36Q32 29 40 36"
+              stroke="currentColor"
+              stroke-width="4"
+              stroke-linecap="round"
+            />
+            <circle cx="32" cy="45" r="3" fill="currentColor" />
+          </svg>
+        </div>
+        <strong>PESU WiFi</strong>
+        <span class="phone-connected">
+          <i></i> Connected
+        </span>
+        <span class="phone-caption">
+          A little less logging in.
+          <br />A little more getting on.
+        </span>
+        <span class="phone-button">
+          Campus network <span>✓</span>
+        </span>
+      </div>
+      <div class="wifi-side-label">
+        AUTHENTICATE
+        <br />
+        <span>↓</span>
+        <br />
+        KEEP ALIVE
+        <br />
+        <span>↓</span>
+        <br />
+        GET ON WITH IT
+      </div>
+    </div>
+  )}
+  {project.visual === 'motion' && (
+    <svg class="motion-diagram" viewBox="0 0 600 330" fill="none" aria-hidden="true">
+      <defs>
+        <pattern id="pose-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+          <path d="M30 0H0v30" stroke="#2e3c4d" stroke-width=".5" />
+        </pattern>
+      </defs>
+      <rect width="600" height="330" fill="url(#pose-grid)" />
+      <path d="M50 275h500" stroke="#3b5269" />
+      {[
+        {
+          x: 135,
+          y: 0,
+          opacity: 0.32,
+          arm: 'M-32 130 -55 163 -74 134M32 130 59 102 75 118',
+          leg: 'M-18 195 -39 234 -58 273M18 195 39 229 63 271',
+        },
+        {
+          x: 300,
+          y: -6,
+          opacity: 0.62,
+          arm: 'M-32 130 -61 112 -78 83M32 130 57 155 81 146',
+          leg: 'M-18 195 -31 237 -37 279M18 195 48 219 70 252',
+        },
+        {
+          x: 465,
+          y: 0,
+          opacity: 1,
+          arm: 'M-32 130 -53 104 -59 77M32 130 59 151 80 126',
+          leg: 'M-18 195 -43 225 -60 272M18 195 29 233 49 272',
+        },
+      ].map((pose) => (
+        <g
+          transform={`translate(${pose.x} ${pose.y})`}
+          opacity={pose.opacity}
+          stroke="#b4d6ed"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cy="94" r="15" />
+          <path d="M0 109v30M-32 130 0 139 32 130M0 139v45M-18 195 0 184 18 195" />
+          <path d={pose.arm} />
+          <path d={pose.leg} />
+          <g fill="#192735">
+            <circle cy="139" r="4" />
+            <circle cy="184" r="4" />
+            <circle cx="-32" cy="130" r="4" />
+            <circle cx="32" cy="130" r="4" />
+            <circle cx="-18" cy="195" r="4" />
+            <circle cx="18" cy="195" r="4" />
+          </g>
+        </g>
+      ))}
+      <g fill="#a7b7c9" font-size="10" font-family="monospace">
+        <text x="106" y="307">
+          FRAME 01
+        </text>
+        <text x="271" y="307">
+          FRAME 02
+        </text>
+        <text x="436" y="307">
+          FRAME 03
+        </text>
+        <text x="24" y="30">
+          HUMAN MOTION → TEMPORAL COHERENCE
+        </text>
+      </g>
+    </svg>
+  )}
+  <div class="visual-caption">
+    {project.note}
+    <span aria-hidden="true">{project.number} / 04</span>
+  </div>
+</div>

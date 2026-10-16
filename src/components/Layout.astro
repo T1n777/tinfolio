@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import Navigation from './Navigation';
+import { person } from '../data/portfolio';
+interface Props {
+  title?: string;
+  description?: string;
+  home?: boolean;
+}
+const {
+  title = 'Yatin Rajesh — Systems, software & a curious mind.',
+  description = 'Computer science student at PES University, Bengaluru. Exploring Linux systems, security, Android, and computer vision through useful, hands-on projects.',
+  home = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#080b0f" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <title>{title}</title>
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: person.name,
+        sameAs: [person.github, person.linkedin],
+        affiliation: { '@type': 'CollegeOrUniversity', name: 'PES University' },
+        knowsAbout: ['Python', 'Linux', 'Android development', 'Computer vision'],
+      })}
+    />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">
+      Skip to content
+    </a>
+    <Navigation home={home} client:load />
+    <slot />
+    <footer class="footer container">
+      <a href="/" class="footer-brand">
+        Yatin Rajesh<span>.</span>
+      </a>
+      <span>Built with intent. Always in progress.</span>
+      <a href={person.github} target="_blank" rel="noopener noreferrer">
+        GitHub ↗
+      </a>
+      <a href="#top" class="back-top">
+        Back to top ↑
+      </a>
+    </footer>
+  </body>
+</html>

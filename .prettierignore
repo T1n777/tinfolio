@@ -1,0 +1,8 @@
+node_modules
+dist
+.astro
+src/components/react-bits
+package-lock.json
+docs/font-sources
+test-results
+playwright-report

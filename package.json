@@ -1,0 +1,33 @@
+{
+  "name": "yatin-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0",
+    "build": "astro check && astro build && node scripts/check-budget.mjs",
+    "preview": "astro preview --host 0.0.0.0",
+    "check": "astro check",
+    "test": "playwright test",
+    "check:react-bits": "node scripts/check-react-bits.mjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.0.1",
+    "astro": "^7.3.8",
+    "ogl": "^1.0.11",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "lighthouse": "^13.5.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1",
+    "typescript": "^5.9.0"
+  }
+}
