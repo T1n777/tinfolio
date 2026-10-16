@@ -1,91 +1,132 @@
-# Yatin Rajesh — Portfolio
+# Tinfolio — Developer Portfolio Template
 
-A modern, high-performance personal portfolio built with Astro, React, TypeScript, and custom CSS. Features dark graphite aesthetic surfaces, fluid WebGL animations, kinetic canvas typography, and refractive liquid glass UI elements.
+A modern, high-performance personal portfolio template built with Astro, React, TypeScript, and custom CSS. Designed with dark graphite surfaces, interactive WebGL fluid animations, kinetic canvas typography, and refractive liquid glass UI components.
 
-## Overview
+This repository (`main` branch) contains the clean, customizable template version ready to be cloned and personalized.
 
-This repository powers the live portfolio of Yatin Rajesh, a computer science student and software developer based in Bengaluru, India. It showcases systems projects, reverse engineering and security research, Android development, and computer vision work.
+## Features
 
-The application is architected around Astro's Island architecture, delivering pre-rendered static HTML by default while hydrating isolated, interactive React components only where needed.
+### 1. Interactive Micro Slats (WebGL)
+- Procedural water-surface slat simulation written in GLSL and rendered with OGL.
+- Pointer-fluid interaction responding to cursor movement, velocity, and touch drag on mobile screens.
+- WebGL2 hardware check with automatic fallback to CSS gradients when acceleration is unavailable or data-saver mode is active.
+- Accessible reduced-motion mode rendering static, non-animated slats when `prefers-reduced-motion: reduce` is enabled.
+- Integrated interactive pause/play motion control button.
 
-## Key Technical Highlights
+### 2. Kinetic Tech Text
+- Canvas-rendered dynamic typography engine for the primary hero title.
+- Physics-based spring animations allowing individual glyphs to be dragged, thrown, or kicked on click/tap.
+- Real-time bounding box calculation, baseline detection, and technical metrics rendering.
+- Zero layout shift with immediate SSR fallback typography rendered while fonts load.
 
-### 1. Micro Slats Dynamic Background (WebGL)
-- Real-time procedural water-surface and slat simulation written in GLSL and rendered with OGL.
-- Full pointer-fluid interaction supporting cursor swirls, wave dispersal, and touch events on mobile devices.
-- Hardware acceleration check with WebGL2 context fallback to lightweight CSS gradients when WebGL is unavailable or when data-saver mode is active.
-- Accessible reduced-motion support that disables fluid animations and renders static, low-power slats when `prefers-reduced-motion: reduce` is detected.
-- Includes an in-browser motion toggle button to pause or resume animation at any time.
-
-### 2. Interactive Tech Text
-- Kinetic canvas-based typography engine rendering the primary hero title.
-- Physics-driven spring animations allowing users to grab, drag, and kick individual letterforms with pointer or touch inputs.
-- Real-time glyph boundary calculation, baseline detection, and technical metrics rendering.
-- Graceful SSR fallback rendering semantic text immediately while web fonts initialize asynchronously.
-
-### 3. Liquid Glass UI Surface
-- Physical glassmorphic navigation bar and action buttons utilizing inline SVG displacement filters (`feDisplacementMap`, `feColorMatrix`, `feGaussianBlur`).
-- Multi-layer chromatic aberration and light refraction effects mimicking physical glass lenses.
-- Adaptive rendering: defaults to hardware-accelerated SVG filter displacement on Chromium, with progressive fallback to frosted backdrop-filter styling on browsers where custom SVG filter backdrops are restricted.
+### 3. Liquid Glass UI Components
+- Glassmorphic navigation bar and action buttons powered by SVG displacement filters (`feDisplacementMap`, `feColorMatrix`, `feGaussianBlur`).
+- Light refraction and chromatic aberration effects replicating physical glass lenses.
+- Adaptive rendering pipeline: hardware-accelerated SVG filter displacement on Chromium, with progressive fallback to frosted backdrop-filter styling on browsers where custom SVG filter backdrops are restricted.
 - Dynamic WebGL texture refraction on profile visuals with real-time mouse tracking.
 
-### 4. Accessibility and Semantic Structure
-- Built to satisfy WCAG 2.2 Level AA accessibility standards.
-- Fully functional without JavaScript enabled: all navigation links, case study details, resume downloads, and contact channels remain accessible in static HTML.
-- Dedicated skip-to-content accessibility link for keyboard navigation.
-- Accessible ARIA labels, semantic landmark regions (`nav`, `main`, `section`, `footer`), and visible focus outlines.
-- Automated accessibility regression testing enforced in CI via `@axe-core/playwright`.
+### 4. Accessibility and Semantic Standards
+- Built to satisfy WCAG 2.2 Level AA accessibility criteria.
+- Full functionality without JavaScript: static HTML delivers all navigation routes, case study content, resume downloads, and contact channels.
+- Keyboard accessible with skip-to-content link and high-contrast focus rings.
+- Automated accessibility regression tests powered by `@axe-core/playwright`.
 
-### 5. Performance and Budget Optimization
-- Strict client-side JavaScript budget enforcing a maximum threshold of 160 KB gzipped for all combined script chunks.
-- Zero client-side bundle overhead for static sections.
-- Self-hosted subsetted fonts (`Manrope` and `IBM Plex Mono` in WOFF2 format) with preloading for instantaneous text rendering.
-- Optimized responsive image formats (WebP and AVIF).
+### 5. Performance and Budget Standards
+- Strict client-side JavaScript budget enforcing a maximum threshold of 160 KB gzipped across all combined script chunks.
+- Zero client-side JavaScript overhead for static pages and non-interactive sections.
+- Self-hosted subsetted fonts (`Manrope` and `IBM Plex Mono` in WOFF2 format) preloaded in document head.
+- Optimized responsive image delivery (WebP and AVIF).
 
 ## Technology Stack
 
 - Framework: Astro 7
 - UI Components: React 19
 - Language: TypeScript 5.9
-- 3D / Shader Engine: OGL 1.0
+- 3D / Shaders: OGL 1.0
 - Testing: Playwright 1.56, Axe-core Playwright 4.10
 - Code Formatting: Prettier 3.9 with Prettier Plugin Astro
 
 ## Project Structure
 
 ```text
-├── astro.config.mjs          # Astro and Vite configuration
+├── astro.config.mjs          # Astro and Vite build settings
 ├── package.json              # Project dependencies and operational scripts
-├── playwright.config.ts      # End-to-end and accessibility test runner configuration
+├── playwright.config.ts      # Test suite runner configuration
 ├── tsconfig.json             # TypeScript compiler settings
-├── public/                   # Static assets, self-hosted fonts, and resume
+├── public/                   # Static assets, fonts, and resume
 │   ├── fonts/                # Subsetted WOFF2 font files
-│   ├── images/               # Case study visuals and diagrams
-│   └── Yatin-Rajesh-Resume.pdf # Downloadable resume document
+│   ├── images/               # Project diagrams and visual assets
+│   └── resume.pdf            # Your downloadable resume document
 ├── src/
 │   ├── components/           # Astro and React UI components
-│   │   ├── react-bits/       # MicroSlats, TechText, and GlassSurface implementations
-│   │   ├── Navigation.tsx    # Responsive glassmorphic header navigation
+│   │   ├── react-bits/       # MicroSlats, TechText, and GlassSurface components
+│   │   ├── Navigation.tsx    # Responsive glassmorphic navigation bar
 │   │   ├── HeroArt.tsx       # MicroSlats WebGL container with motion controls
 │   │   ├── NameArt.tsx       # TechText typography wrapper with fallback
-│   │   ├── GlassLink.tsx     # Refractive glass anchor button component
+│   │   ├── GlassLink.tsx     # Refractive glass link button component
 │   │   ├── GlassProfile.tsx  # WebGL optical lens profile component
-│   │   ├── Layout.astro      # Master layout with metadata, JSON-LD, and skip link
+│   │   ├── Layout.astro      # Master HTML layout, metadata, and JSON-LD schema
 │   │   └── ProjectVisual.astro # Project graphic cards and diagrams
 │   ├── data/
-│   │   └── portfolio.ts      # Profile, projects, stack, and contact data source
+│   │   └── portfolio.ts      # Core configuration: your name, bio, projects, and links
 │   ├── pages/
 │   │   ├── index.astro       # Main landing page
-│   │   ├── 404.astro         # Not found page
-│   │   └── work/[slug].astro # Dynamic case study detail pages
+│   │   ├── 404.astro         # Custom 404 error page
+│   │   └── work/[slug].astro # Dynamic case study detail routes
 │   └── styles/
-│       └── global.css        # Design tokens, resets, typography, and layout rules
+│       └── global.css        # Design tokens, color themes, resets, and layout
 ├── scripts/
-│   ├── check-budget.mjs      # Enforces 160 KB gzipped bundle budget on build output
-│   └── check-react-bits.mjs  # Verifies component integrity against baseline
+│   ├── check-budget.mjs      # Enforces 160 KB gzipped client bundle budget
+│   └── check-react-bits.mjs  # Audits component implementations against baseline
 ├── tests/
 │   └── portfolio.spec.ts     # Playwright E2E and Axe accessibility test suite
 └── docs/                     # Design decisions, attribution, and architecture notes
+```
+
+## How to Customize for Yourself
+
+### 1. Update Personal Information and Projects
+
+Open `src/data/portfolio.ts` to configure your profile:
+
+```typescript
+export const person = {
+  name: 'Your Name',
+  monogram: 'yn',
+  email: 'your.email@example.com',
+  github: 'https://github.com/yourusername',
+  linkedin: 'https://linkedin.com/in/yourusername',
+};
+```
+
+Update the `projects` array with your featured projects:
+- `slug`: URL slug for the case study route (`/work/[slug]/`).
+- `name`: Display name of the project.
+- `summary`: One-sentence deck description.
+- `stack`: Array of technologies used.
+- `repo`: GitHub repository link.
+- `live`: Optional live deployment URL.
+- `visual`: Visual archetype (`server`, `security`, `wifi`, `motion`).
+- `problem`, `approach`, `outcome`, `highlights`: Detailed case study breakdown.
+
+Update `otherProjects` with additional repositories to display in the workbench table.
+
+### 2. Replace Your Resume
+
+Place your PDF resume at `public/resume.pdf`. All resume download buttons and navigation links reference this path.
+
+### 3. Customize Colors and Styling
+
+Adjust CSS variables in `src/styles/global.css`:
+
+```css
+:root {
+  --paper: #080b0f;
+  --ink: #edf1f7;
+  --muted: #a0a9b7;
+  --line: #28313d;
+  --accent: #b9dcf6;
+}
 ```
 
 ## Getting Started
@@ -113,66 +154,68 @@ Start the local development server:
 npm run dev
 ```
 
-The application will be accessible at `http://localhost:4321`.
+Open `http://localhost:4321` in your browser.
 
 ### Production Build
 
-Run type checks, build static assets, and verify bundle budgets:
+Run Astro diagnostics, compile static files, and verify JavaScript bundle budgets:
 
 ```sh
 npm run build
 ```
 
-The production output is generated in the `dist/` directory.
+The production output will be generated in `dist/`.
 
 ### Preview Production Build
 
-Serve the generated production build locally:
+Preview the compiled production build locally:
 
 ```sh
 npm run preview -- --port 4322
 ```
 
-The preview will be available at `http://localhost:4322`.
+Navigate to `http://localhost:4322`.
 
-## Testing
+## Verification and Testing
 
-The project includes an extensive Playwright test suite covering:
-- Cross-device navigation across desktop and mobile viewports.
-- Case study detail routes and outbound repository links.
-- Resume download HTTP response verification.
-- Clipboard API interaction and user feedback state.
-- Animation control toggling and `prefers-reduced-motion` compliance.
-- Complete navigation functionality with JavaScript disabled.
-- Automated WCAG 2.2 AA accessibility evaluation via Axe.
-- React Bits rendering verification (MicroSlats frame updates, TechText drag interactions, and Glass refraction).
-
-Run tests:
+Run the full end-to-end and accessibility test suite:
 
 ```sh
 npm test
 ```
 
-Run component audit checks:
+Run component integrity checks:
 
 ```sh
 npm run check:react-bits
 ```
 
-Run Astro and TypeScript type checks:
+Run TypeScript and Astro type checks:
 
 ```sh
 npm run check
 ```
 
-## Deployment
+## Deployment Options
 
-The static output in `dist/` can be deployed directly to any static web host:
+Deploy the static output directory `dist/` to any static hosting platform:
 
-- Cloudflare Pages: set build command to `npm run build` and output directory to `dist`.
-- Vercel: set framework to `Astro`, build command to `npm run build`, and output directory to `dist`.
-- Netlify: publish directory `dist`, build command `npm run build`.
-- GitHub Pages: deploy from GitHub Actions using the standard Astro GitHub Pages workflow.
+### Cloudflare Pages
+- Framework preset: `None`
+- Build command: `npm run build`
+- Build output directory: `dist`
+
+### Vercel
+- Framework preset: `Astro`
+- Build command: `npm run build`
+- Output directory: `dist`
+
+### Netlify
+- Build command: `npm run build`
+- Publish directory: `dist`
+
+### GitHub Pages
+Deploy using the official Astro GitHub Actions deployment workflow. Ensure `site` is configured in `astro.config.mjs` with your GitHub Pages URL.
 
 ## License
 

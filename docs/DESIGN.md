@@ -15,7 +15,7 @@ The user delegated framework and design choices. These are implementation assump
 3. Static generation: content is public and changes infrequently; no authentication or runtime data service is needed.
 4. JavaScript budget: 160 KB gzip for **all emitted chunks combined**, enforced during build. This deliberately allows the requested React effects; a zero-JavaScript portfolio would not satisfy the brief.
 5. Searchable public content: the page text and links are generated as HTML.
-6. Design source of truth: CSS custom properties and shared components in this repository; Yatin owns future design/content changes.
+6. Design source of truth: CSS custom properties and shared components in this repository; the site owner owns future design/content changes.
 7. Accessibility: WCAG 2.2 AA target. Codex owns the implementation checks for this delivery; future maintenance belongs to the site owner. Automated checks do not constitute full accessibility certification.
 
 Lab targets: Lighthouse mobile performance ≥90 and accessibility ≥95. The complete interactive effects are more expensive than the previous implementation; the current software-WebGL performance result is below the performance target. Measured results and limitations are in `docs/VALIDATION.md`, and supersede the earlier redesign's scores.

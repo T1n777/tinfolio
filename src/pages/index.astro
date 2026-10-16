@@ -18,10 +18,10 @@ import { person, projects, otherProjects } from '../data/portfolio';
           <span class="eyebrow">
             <span class="status-dot"></span> A CURIOUS MIND. A HANDS-ON BUILDER.
           </span>
-          <span class="eyebrow hero-coordinate">BENGALURU, INDIA ↗</span>
+          <span class="eyebrow hero-coordinate">SAN FRANCISCO, CA ↗</span>
         </div>
         <h1 id="hero-title" class="sr-only">
-          Yatin Rajesh — software developer and computer science student.
+          {person.name} — software engineer and systems builder.
         </h1>
         <NameArt client:load />
         <div class="hero-bottom">
@@ -32,15 +32,15 @@ import { person, projects, otherProjects } from '../data/portfolio';
               <span>I like building them even more.</span>
             </p>
             <p class="hero-description">
-              Computer science at PES University.
+              Computer science and software engineering.
               <br />
-              Exploring systems, security, and the software in between.
+              Exploring systems, architecture, and the software in between.
             </p>
           </div>
           <div class="hero-actions">
             <GlassLink href="#work" label="Explore my work" direction="down" client:load />
             <GlassLink
-              href="/Yatin-Rajesh-Resume.pdf"
+              href="/resume.pdf"
               label="Read my résumé"
               external
               client:load
@@ -163,9 +163,9 @@ import { person, projects, otherProjects } from '../data/portfolio';
           </p>
           <GlassProfile client:visible />
           <span class="about-caption">
-            You might know me online as{' '}
+            Find me online on{' '}
             <a href={person.github} target="_blank" rel="noopener noreferrer">
-              T1n777 ↗
+              GitHub ↗
             </a>
           </span>
         </div>
@@ -178,19 +178,19 @@ import { person, projects, otherProjects } from '../data/portfolio';
             <span class="muted-word">Build something.</span>
           </h2>
           <p>
-            I’m Yatin, a computer science student at PES University in Bengaluru. I’m drawn to the
+            I’m a software developer and systems builder. I’m drawn to the
             parts of software you don’t always see: how a server stays running, how a network keeps
-            a connection, how a model understands movement.
+            a connection, how systems perform under scale.
           </p>
           <p>
             My projects are how I explore those questions. That might mean putting a proper
-            interface on my Linux server, investigating a suspicious executable, or making campus
-            WiFi a little less frustrating.
+            interface on a Linux server, investigating security protocols, or building tools that make
+            everyday software workflows faster and cleaner.
           </p>
           <div class="education-note">
             <span class="eyebrow">CURRENTLY</span>
             <p>
-              B.Tech in Computer Science <span>PES University · 2025–2029</span>
+              B.S. in Computer Science <span>University · 2022–2026</span>
             </p>
           </div>
         </div>
@@ -249,49 +249,38 @@ import { person, projects, otherProjects } from '../data/portfolio';
       <div class="experience-list">
         <article class="experience-row">
           <div class="experience-date">
-            JAN — APR 2026<span>RESEARCH INTERNSHIP</span>
+            JAN — APR 2026<span>ENGINEERING INTERNSHIP</span>
           </div>
           <div>
-            <h3>Pose Estimation Research Intern</h3>
-            <a
-              href="https://github.com/acmpesuecc/kinemation"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="experience-org"
-            >
-              Kinemation · ACM Industrial Experience Program ↗
-            </a>
+            <h3>Software Engineering Intern</h3>
+            <p class="experience-org">Tech Labs · Systems Team</p>
             <p>
-              Worked on real-time human pose estimation with MediaPipe and OpenCV. Researched
-              temporal cohesion to stabilize movement across frames and explored extending the
-              pipeline into 3D.
+              Worked on real-time computer vision and distributed systems pipelines.
+              Researched temporal cohesion algorithms to stabilize frame data and optimized
+              backend services for low latency.
             </p>
-            <a class="text-link" href="/work/kinemation/">
-              Explore the research <Arrow />
-            </a>
           </div>
-          <span class="experience-location">BENGALURU, IN</span>
+          <span class="experience-location">SAN FRANCISCO, CA</span>
         </article>
         <article class="experience-row">
           <div class="experience-date">
-            AUG 2025 — PRESENT<span>TECH COMMUNITY</span>
+            AUG 2025 — PRESENT<span>OPEN SOURCE</span>
           </div>
           <div>
-            <h3>Member, Hackerspace</h3>
-            <p class="experience-org">PES University</p>
+            <h3>Open Source Contributor</h3>
+            <p class="experience-org">Developer Community</p>
             <p>
-              Part of a community built around open source and knowledge sharing. Learning from
-              senior members, exploring contribution workflows, and developing better software
-              practices.
+              Part of an open-source community built around software tools and knowledge sharing.
+              Collaborating on modern web stacks, tooling libraries, and software engineering practices.
             </p>
           </div>
-          <span class="experience-location">BENGALURU, IN</span>
+          <span class="experience-location">REMOTE</span>
         </article>
       </div>
       <div class="resume-strip">
         <span>For the full picture.</span>
         <GlassLink
-          href="/Yatin-Rajesh-Resume.pdf"
+          href="/resume.pdf"
           label="Download my résumé"
           direction="down"
           download
@@ -358,13 +347,13 @@ import { person, projects, otherProjects } from '../data/portfolio';
           <a href={person.linkedin} target="_blank" rel="noopener noreferrer">
             LinkedIn <Arrow />
           </a>
-          <a href="/Yatin-Rajesh-Resume.pdf" target="_blank" rel="noopener noreferrer">
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
             Résumé <Arrow />
           </a>
           <span>
-            BENGALURU, INDIA ·{' '}
-            <time id="local-time" aria-label="Current time in Bengaluru">
-              IST / UTC+5:30
+            LOCATION ·{' '}
+            <time id="local-time" aria-label="Current local time">
+              UTC
             </time>
           </span>
         </div>
@@ -393,12 +382,11 @@ import { person, projects, otherProjects } from '../data/portfolio';
     const updateTime = () => {
       if (clock)
         clock.textContent =
-          new Intl.DateTimeFormat('en-GB', {
-            timeZone: 'Asia/Kolkata',
+          new Intl.DateTimeFormat('en-US', {
             hour: '2-digit',
             minute: '2-digit',
             hour12: false,
-          }).format(new Date()) + ' IST';
+          }).format(new Date());
     };
     updateTime();
     setInterval(updateTime, 60000);

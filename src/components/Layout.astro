@@ -8,8 +8,8 @@ interface Props {
   home?: boolean;
 }
 const {
-  title = 'Yatin Rajesh — Systems, software & a curious mind.',
-  description = 'Computer science student at PES University, Bengaluru. Exploring Linux systems, security, Android, and computer vision through useful, hands-on projects.',
+  title = `${person.name} — Software engineer & builder.`,
+  description = 'Personal portfolio showcasing software engineering, systems design, and interactive applications.',
   home = false,
 } = Astro.props;
 ---
@@ -35,8 +35,7 @@ const {
         '@type': 'Person',
         name: person.name,
         sameAs: [person.github, person.linkedin],
-        affiliation: { '@type': 'CollegeOrUniversity', name: 'PES University' },
-        knowsAbout: ['Python', 'Linux', 'Android development', 'Computer vision'],
+        knowsAbout: ['Software Engineering', 'Systems Architecture', 'Web Development'],
       })}
     />
   </head>
@@ -48,7 +47,7 @@ const {
     <slot />
     <footer class="footer container">
       <a href="/" class="footer-brand">
-        Yatin Rajesh<span>.</span>
+        {person.name}<span>.</span>
       </a>
       <span>Built with intent. Always in progress.</span>
       <a href={person.github} target="_blank" rel="noopener noreferrer">

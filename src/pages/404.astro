@@ -1,8 +1,9 @@
 ---
 import Layout from '../components/Layout.astro';
+import { person } from '../data/portfolio';
 ---
 
-<Layout title="Page not found — Yatin Rajesh">
+<Layout title={`Page not found — ${person.name}`}>
   <main id="main" class="not-found container">
     <div id="top">
       <p class="eyebrow">404 / A SMALL DETOUR</p>

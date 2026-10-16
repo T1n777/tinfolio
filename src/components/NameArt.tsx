@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import TechText from './react-bits/TechText';
+import { person } from '../data/portfolio';
 
 interface Props {
   text?: string;
   variant?: 'hero' | 'word';
 }
 
-export default function NameArt({ text = 'Yatin Rajesh.', variant = 'hero' }: Props) {
+export default function NameArt({ text, variant = 'hero' }: Props) {
+  const displayText = text ?? `${person.name}.`;
   const [ready, setReady] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -34,10 +36,10 @@ export default function NameArt({ text = 'Yatin Rajesh.', variant = 'hero' }: Pr
       className={`name-art name-art-${variant} ${animated ? 'name-art-ready' : ''}`}
       aria-hidden="true"
     >
-      <span className="name-fallback">{text}</span>
+      <span className="name-fallback">{displayText}</span>
       {animated && (
         <TechText
-          text={text}
+          text={displayText}
           fontFamily="Manrope"
           fontWeight={500}
           fontSize={variant === 'hero' ? 230 : 90}

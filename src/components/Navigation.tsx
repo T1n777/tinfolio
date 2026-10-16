@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import GlassSurface from './react-bits/GlassSurface';
 import GlassLink from './GlassLink';
 
+import { person } from '../data/portfolio';
+
 export default function Navigation({ home = false }: { home?: boolean }) {
   const [active, setActive] = useState('');
   useEffect(() => {
@@ -37,8 +39,8 @@ export default function Navigation({ home = false }: { home?: boolean }) {
         className="navigation-glass"
       >
         <nav className="navigation" aria-label="Main navigation">
-          <a className="monogram" href={home ? '#top' : '/'} aria-label="yr. — Yatin Rajesh, home">
-            yr<span>.</span>
+          <a className="monogram" href={home ? '#top' : '/'} aria-label={`${person.name}, home`}>
+            {person.monogram}<span>.</span>
           </a>
           <div className="nav-links">
             {['work', 'about', 'experience'].map((id) => (

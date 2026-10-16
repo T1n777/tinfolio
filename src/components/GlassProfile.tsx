@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import GlassSurface from './react-bits/GlassSurface';
+import { person } from '../data/portfolio';
 
 export default function GlassProfile() {
   const image = useRef<HTMLImageElement>(null);
@@ -33,18 +34,18 @@ export default function GlassProfile() {
           greenOffset={10}
           blueOffset={20}
         >
-          <span className="profile-edition">PERSONAL INDEX / 001</span>
+          <span className="profile-edition">PROFILE INDEX / 001</span>
           <span className="profile-initials" aria-hidden="true">
-            yr<span>.</span>
+            {person.monogram}<span>.</span>
           </span>
           <div className="profile-caption">
-            <strong>Yatin Rajesh</strong>
-            <span>BENGALURU · BUILDING & EXPLORING</span>
+            <strong>{person.name}</strong>
+            <span>PORTFOLIO · BUILDING & EXPLORING</span>
           </div>
         </GlassSurface>
       </div>
       <span className="profile-coordinate" aria-hidden="true">
-        12.97° N &nbsp; 77.59° E
+        37.77° N &nbsp; 122.41° W
       </span>
     </div>
   );

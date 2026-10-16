@@ -8,10 +8,10 @@ test('portfolio navigation, case studies, résumé, and mobile layout work', asy
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Yatin Rajesh');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Your Name');
   await page.getByRole('link', { name: 'Explore my work' }).click();
   await expect(page).toHaveURL(/#work$/);
-  for (const name of ['Tinarchy', 'SpectreFlow', 'PESU WiFi', 'Kinemation']) {
+  for (const name of ['Server Core', 'Spectre Engine', 'Portal Flow', 'Kinematics']) {
     await page.getByRole('link', { name: `Explore ${name}`, exact: true }).click();
     await expect(page.getByRole('heading', { level: 1 })).toContainText(name);
     await expect(page.getByRole('link', { name: 'View repository' })).toHaveAttribute(
@@ -23,14 +23,14 @@ test('portfolio navigation, case studies, résumé, and mobile layout work', asy
     );
     await page.getByRole('link', { name: '← Selected work' }).click();
   }
-  const resume = await request.get('/Yatin-Rajesh-Resume.pdf');
+  const resume = await request.get('/resume.pdf');
   expect(resume.status()).toBe(200);
   expect(resume.headers()['content-type']).toContain('application/pdf');
   await page.getByRole('link', { name: 'Let’s talk' }).click();
   await expect(page).toHaveURL(/#contact$/);
-  await expect(page.getByRole('link', { name: 'yatinrajesh123@gmail.com' })).toHaveAttribute(
+  await expect(page.getByRole('link', { name: 'hello@example.com' })).toHaveAttribute(
     'href',
-    'mailto:yatinrajesh123@gmail.com',
+    'mailto:hello@example.com',
   );
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect(errors).toEqual([]);
@@ -52,7 +52,7 @@ test('motion control, clipboard feedback, and accessible page structure', async 
   await page.getByRole('button', { name: 'Copy email address' }).click();
   await expect(page.getByRole('status')).toHaveText('Copied!');
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-    'yatinrajesh123@gmail.com',
+    'hello@example.com',
   );
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
@@ -74,7 +74,7 @@ test('reduced motion is respected and case studies are accessible', async ({ pag
   await expect(page.locator('.tech-text canvas')).toHaveCount(0);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await expect(page.getByRole('button', { name: 'Pause motion' })).toBeVisible();
-  await page.goto('/work/tinarchy/');
+  await page.goto('/work/server-core/');
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
     .analyze();
@@ -94,8 +94,8 @@ test('core content and navigation remain available without JavaScript', async ({
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4322/');
   await expect(page.locator('.name-art-hero .name-fallback')).toBeVisible();
-  await page.getByRole('link', { name: 'Explore Tinarchy', exact: true }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Tinarchy.');
+  await page.getByRole('link', { name: 'Explore Server Core', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Server Core.');
   await context.close();
 });
 

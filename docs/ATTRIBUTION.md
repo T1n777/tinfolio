@@ -27,21 +27,11 @@ Manrope by the Manrope Project Authors and IBM Plex Mono by IBM, sourced from Go
 
 ## Project visuals
 
-- Tinarchy: actual screenshot from https://github.com/T1n777/Tinarchy/blob/main/public/screenshots/tinarchy-preview.png, resized and encoded as WebP for this portfolio.
+- Server preview screenshot: optimized and encoded as WebP for this portfolio.
 - SpectreFlow, PESU WiFi, Kinemation: custom SVG/CSS explanatory illustrations, labeled as concepts on the site. They are not screenshots, live telemetry, or recorded experimental outputs.
 - `optical-field.svg`: an original decorative ring graphic used as the explicit backdrop texture for the WebGL Glass Surface profile object.
 
 ## Content sources
 
-- The user-supplied `/home/tin/Documents/Yatin_resume.pdf`.
-- https://github.com/T1n777
-- https://github.com/T1n777/Tinarchy
-- https://github.com/T1n777/SpectreFlow
-- https://github.com/imyash0722/pesu-wifi-android
-- https://github.com/acmpesuecc/kinemation
-- https://github.com/T1n777/Chronos_Log
-- https://github.com/T1n777/pswc-study-app
-- https://github.com/T1n777/AI-Task-Manager
-- https://github.com/T1n777/Personal-Expense-Tracker
+Project data, biography, and profile links are configurable in `src/data/portfolio.ts`.
 
-LinkedIn could not be read due to automated-access restrictions. No résumé facts were inferred from it.

@@ -3,7 +3,7 @@ import Layout from '../../components/Layout.astro';
 import GlassLink from '../../components/GlassLink';
 import Arrow from '../../components/Arrow.astro';
 import ProjectVisual from '../../components/ProjectVisual.astro';
-import { projects, type Project } from '../../data/portfolio';
+import { projects, person, type Project } from '../../data/portfolio';
 export function getStaticPaths() {
   return projects.map((project, i) => ({
     params: { slug: project.slug },
@@ -17,7 +17,7 @@ interface Props {
 const { project, next } = Astro.props;
 ---
 
-<Layout title={`${project.name} — Yatin Rajesh`} description={project.summary}>
+<Layout title={`${project.name} — ${person.name}`} description={project.summary}>
   <main id="main" class="case-study">
     <header class="case-header container" id="top">
       <a href="/#work" class="text-link">
@@ -73,7 +73,7 @@ const { project, next } = Astro.props;
         <section>
           <p class="eyebrow">THE STARTING POINT</p>
           <h2>
-            {project.slug === 'kinemation'
+            {project.visual === 'motion'
               ? 'A frame is only part of the story.'
               : 'A problem worth exploring.'}
           </h2>
