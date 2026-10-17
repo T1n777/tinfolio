@@ -219,6 +219,16 @@ Deploy the static output directory `dist/` to any static hosting platform:
 ### GitHub Pages
 Deploy using the official Astro GitHub Actions deployment workflow. Ensure `site` is configured in `astro.config.mjs` with your GitHub Pages URL.
 
+## Credits and Acknowledgments
+
+Interactive UI and animation components throughout this project are powered by [React Bits](https://reactbits.dev) created by [David Haz](https://github.com/DavidHDev):
+
+- [Micro Slats](https://reactbits.dev/backgrounds/micro-slats): Interactive WebGL slat simulation with pointer-fluid dynamics used in the hero background.
+- [Tech Text](https://reactbits.dev/text-animations/tech-text): Physics-based spring typography engine with draggable glyphs and canvas metrics used for the dynamic headline art.
+- [Glass Surface](https://reactbits.dev/components/glass-surface): Liquid glass displacement SVG filters and WebGL texture refraction powering the navigation bar, buttons, and profile lens.
+
+Component licensing and provenance details are maintained in `docs/ATTRIBUTION.md` and `docs/REACT-BITS-LICENSE.md`.
+
 ## License
 
 This project is licensed under the MIT License.

@@ -19,6 +19,7 @@ This guide provides detailed, step-by-step instructions for customizing every as
 11. [Typography and Self-Hosted Fonts](#11-typography-and-self-hosted-fonts)
 12. [Validation, Testing, and Performance Budgets](#12-validation-testing-and-performance-budgets)
 13. [Deployment Instructions](#13-deployment-instructions)
+14. [Credits and Acknowledgments](#14-credits-and-acknowledgments)
 
 ---
 
@@ -564,3 +565,16 @@ The test suite in `tests/portfolio.spec.ts` verifies:
 3. Build command: `npm run build`
 4. Output directory: `dist`
 5. Click **Deploy**.
+
+---
+
+## 14. Credits and Acknowledgments
+
+The interactive animated elements in this portfolio are powered by [React Bits](https://reactbits.dev) created by [David Haz](https://github.com/DavidHDev):
+
+- [Micro Slats](https://reactbits.dev/backgrounds/micro-slats): Interactive WebGL slat simulation with pointer-fluid dynamics used in the hero background.
+- [Tech Text](https://reactbits.dev/text-animations/tech-text): Physics-based spring typography engine with draggable glyphs and canvas metrics used for dynamic headline art.
+- [Glass Surface](https://reactbits.dev/components/glass-surface): Displacement SVG filters and WebGL texture refraction powering the navigation bar, buttons, and profile lens.
+
+Licensing terms and upstream references are documented in `docs/ATTRIBUTION.md` and `docs/REACT-BITS-LICENSE.md`.
+
