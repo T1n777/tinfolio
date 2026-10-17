@@ -85,6 +85,8 @@ This repository (`main` branch) contains the clean, customizable template versio
 
 ## How to Customize for Yourself
 
+For a comprehensive, step-by-step walkthrough covering every customization option (adding names, changing copy, adjusting color palettes, adding repo cards, custom screenshots, and typography), see [USAGE.md](USAGE.md).
+
 ### 1. Update Personal Information and Projects
 
 Open `src/data/portfolio.ts` to configure your profile:
