@@ -46,4 +46,4 @@ These are local lab measurements, not field p75 metrics. Hosting latency and rea
 - [Mobile opening](preview-mobile.png)
 - [Glass profile object](preview-glass.png)
 
-The development preview runs at http://localhost:4321 and the production preview at http://localhost:4322. The site has not been publicly deployed.
+The live production deployment is hosted on Cloudflare Pages at https://tinfolio.pages.dev. The local development preview runs at http://localhost:4321 and the local production preview at http://localhost:4322.
