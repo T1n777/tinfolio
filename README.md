@@ -174,6 +174,16 @@ The static output in `dist/` can be deployed directly to any static web host:
 - Netlify: publish directory `dist`, build command `npm run build`.
 - GitHub Pages: deploy from GitHub Actions using the standard Astro GitHub Pages workflow.
 
+## Credits and Acknowledgments
+
+Interactive UI and animation components throughout this portfolio are powered by [React Bits](https://reactbits.dev) created by [David Haz](https://github.com/DavidHDev):
+
+- [Micro Slats](https://reactbits.dev/backgrounds/micro-slats): Interactive WebGL slat simulation with pointer-fluid dynamics used in the hero background.
+- [Tech Text](https://reactbits.dev/text-animations/tech-text): Physics-based spring typography engine with draggable glyphs and canvas metrics used for the dynamic headline art.
+- [Glass Surface](https://reactbits.dev/components/glass-surface): Liquid glass displacement SVG filters and WebGL texture refraction powering the navigation bar, buttons, and profile lens.
+
+Component licensing and provenance details are maintained in `docs/ATTRIBUTION.md` and `docs/REACT-BITS-LICENSE.md`.
+
 ## License
 
 This project is licensed under the MIT License.
