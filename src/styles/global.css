@@ -2530,3 +2530,23 @@ img {
     margin-top: 26px;
   }
 }
+
+/* Static navigation shares the same links and footprint without hydration. */
+.static-nav {
+  padding: 5px 8px 5px 22px;
+  min-height: 60px;
+  border: 1px solid var(--line);
+  border-radius: 32px;
+  background: #101720f5;
+}
+.static-nav .navigation { min-height: 48px; }
+@media (max-width: 480px) {
+  .nav-links { gap: 10px; }
+  .navigation { gap: 8px; }
+  .navigation-glass .glass-surface__content { padding-left: 12px; }
+  .static-nav { padding-left: 12px; }
+  .nav-contact.glass-link { min-width: 0; }
+  .nav-contact .glass-surface__content { gap: 5px; padding-inline: 9px; }
+  .nav-contact.glass-link svg { display: none; }
+  .static-nav .nav-contact { padding-inline: 9px; white-space: nowrap; }
+}

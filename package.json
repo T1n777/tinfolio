@@ -13,6 +13,7 @@
     "check:react-bits": "node scripts/check-react-bits.mjs"
   },
   "dependencies": {
+    "@astrojs/mdx": "^8.1.0",
     "@astrojs/react": "^7.0.1",
     "astro": "^7.3.8",
     "ogl": "^1.0.11",

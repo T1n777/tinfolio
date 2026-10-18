@@ -232,3 +232,54 @@ Component licensing and provenance details are maintained in `docs/ATTRIBUTION.m
 ## License
 
 This project is licensed under the MIT License.
+
+## Managing the blog
+
+Posts live in `src/content/blog/`. Both `.md` and `.mdx` files are supported.
+The filename determines the URL: `building-in-the-open.md` becomes
+`/blog/building-in-the-open/`. Nested folders produce nested URLs.
+
+### Add a post
+
+Create a Markdown file with a lowercase, hyphenated filename and this frontmatter:
+
+```yaml
+---
+title: "A new experiment"
+description: "A short summary for the article list and search previews."
+pubDate: 2026-10-17
+draft: true
+tags: ["Engineering"]
+---
+```
+
+Write the article below the frontmatter. Start sections at `##` because the page
+already renders the title as its `h1`. Add meaningful alt text to images and use
+descriptive link text. Code fences can specify a language such as `typescript`
+or `sh` for build-time syntax highlighting.
+
+Run `npm run dev` and visit `/blog/`. Drafts appear with a Draft label locally.
+Set `draft: false` (or remove the field) when ready to publish. Run
+`npm run check`, `npm run build`, and `npm test` before deploying `dist/`.
+
+### Edit, unpublish, or delete
+
+- Edit the file directly; optionally set `updatedDate: 2026-10-18`.
+- Set `draft: true` to unpublish without losing the source. Production builds
+  exclude drafts from both the index and generated routes. Dev includes them.
+- Delete the file to remove the post from the next build.
+- Rebuild and redeploy after edits. Replace the previous deployment rather than
+  copying over it, so unpublished or deleted HTML does not remain on the host.
+
+`title`, `description`, and `pubDate` are required. `updatedDate`, `tags`, and
+`readingTime` are optional; `draft` defaults to false. Dates use ISO format.
+Reading time defaults to a minimum of one minute at 200 words per minute; use
+`readingTime: "5 min read"` to override it. Posts sort newest first by `pubDate`.
+Future dates do not schedule publication; use drafts for unpublished work.
+
+Blog pages render static HTML, including their navigation, with no hydrated
+islands. MDX components must remain server-rendered: do not add `client:*`
+directives or browser scripts to posts. The blog tests check emitted pages for
+client-side scripts and run Axe accessibility checks. Drafts are an editorial
+convenience, not a place to store secrets in a public repository.
+
