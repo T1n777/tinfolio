@@ -3,6 +3,7 @@ title: "Building in the open"
 description: "Small releases, useful notes, and why documenting the process is part of building good software."
 pubDate: 2026-10-17
 tags: ["Engineering", "Open source", "Learning"]
+draft: true
 ---
 
 ## Start with a problem you can observe
