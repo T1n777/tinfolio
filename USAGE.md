@@ -19,7 +19,8 @@ This guide provides detailed, step-by-step instructions for customizing every as
 11. [Typography and Self-Hosted Fonts](#11-typography-and-self-hosted-fonts)
 12. [Validation, Testing, and Performance Budgets](#12-validation-testing-and-performance-budgets)
 13. [Deployment Instructions](#13-deployment-instructions)
-14. [Credits and Acknowledgments](#14-credits-and-acknowledgments)
+14. [Writing and Managing Blogs](#14-writing-and-managing-blogs)
+15. [Credits and Acknowledgments](#15-credits-and-acknowledgments)
 
 ---
 
@@ -568,7 +569,52 @@ The test suite in `tests/portfolio.spec.ts` verifies:
 
 ---
 
-## 14. Credits and Acknowledgments
+## 14. Writing and Managing Blogs
+
+The portfolio includes an Astro Content Collection for technical articles and notes located at `src/content/blog/`. Both Markdown (`.md`) and MDX (`.mdx`) are supported.
+
+### 14.1 Adding a New Blog Post
+1. Create a new `.md` or `.mdx` file in `src/content/blog/` using a hyphenated slug (e.g., `src/content/blog/systems-architecture.md`). The filename becomes the URL slug (`/blog/systems-architecture/`).
+2. Include the required frontmatter at the top of the file:
+```yaml
+---
+title: "Understanding Systems Architecture"
+description: "A deep dive into distributed systems resilience and zero-latency caching."
+pubDate: 2026-10-18
+tags: ["Systems", "Architecture", "Engineering"]
+draft: false
+---
+```
+3. Write your post below the frontmatter using standard Markdown:
+   - Use `##` (H2) and `###` (H3) for subheadings (the post title is automatically rendered as `H1`).
+   - Use triple backticks with a language tag (e.g. ```` ```typescript ````) for syntax-highlighted code blocks.
+   - Use `>` for blockquotes, `-` for bullet lists, and standard markdown links.
+
+### 14.2 Frontmatter Fields
+- `title` *(string, required)*: The title of the article.
+- `description` *(string, required)*: Summary shown in search previews and on the `/blog/` index.
+- `pubDate` *(date, required)*: Publication date (ISO format `YYYY-MM-DD`).
+- `updatedDate` *(date, optional)*: Last updated date.
+- `draft` *(boolean, optional, default: false)*: Draft status.
+- `tags` *(array of strings, optional)*: Tags displayed on post cards and article headers.
+- `readingTime` *(string, optional)*: Custom reading duration (e.g. `"4 min read"`). If omitted, reading time is calculated automatically based on word count.
+
+### 14.3 Hiding and Unpublishing (Drafts)
+- Set `draft: true` in the frontmatter.
+- When `draft: true` is set:
+  - During local development (`npm run dev`), the post remains visible with a subtle "Draft" badge for review.
+  - During production builds (`npm run build`), drafts are automatically excluded from both the `/blog/` listing and static route generation.
+
+### 14.4 Editing or Deleting a Post
+- **To edit**: Modify the `.md` or `.mdx` file directly. You can add `updatedDate: YYYY-MM-DD` to display an update timestamp.
+- **To delete**: Remove the `.md` file from `src/content/blog/`. On the next build, the page is completely removed.
+
+### 14.5 Performance & Accessibility
+All blog pages render 100% static HTML without client-side JavaScript islands, keeping the site well under the 160 KB JavaScript performance budget.
+
+---
+
+## 15. Credits and Acknowledgments
 
 The interactive animated elements in this portfolio are powered by [React Bits](https://reactbits.dev) created by [David Haz](https://github.com/DavidHDev):
 

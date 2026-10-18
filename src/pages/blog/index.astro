@@ -1,0 +1,54 @@
+---
+import Layout from '../../components/Layout.astro';
+import { getBlogPosts, readingTime, formatDate, blogUrl } from '../../lib/blog';
+import { person } from '../../data/portfolio';
+import '../../styles/blog.css';
+const posts = await getBlogPosts();
+---
+
+<Layout
+  title={`Blog — ${person.name}`}
+  description="Notes on building software, exploring systems, and learning in the open."
+  staticNavigation
+>
+  <main id="main" class="blog container">
+    <header class="blog-heading" id="top">
+      <p class="eyebrow">NOTES / IDEAS / PROCESS</p>
+      <h1>
+        Building, learning,
+        <br />
+        writing<span>.</span>
+      </h1>
+      <p class="blog-deck">Notes on software, systems, and the questions that keep me building.</p>
+    </header>
+    <section aria-label="Articles">
+      {posts.length === 0 && <p class="blog-empty">No articles published yet. Check back soon.</p>}
+      <ul class="article-list">
+        {posts.map((post) => (
+          <li>
+            <article class="article-preview">
+              <div class="blog-meta">
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {formatDate(post.data.pubDate)}
+                </time>
+                <span>{readingTime(post)}</span>
+                {post.data.draft && <span class="draft-label">Draft</span>}
+              </div>
+              <h2>
+                <a href={blogUrl(post.id)}>{post.data.title}</a>
+              </h2>
+              <p>{post.data.description}</p>
+              {!!post.data.tags?.length && (
+                <ul class="blog-tags" aria-label="Tags">
+                  {post.data.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </main>
+</Layout>

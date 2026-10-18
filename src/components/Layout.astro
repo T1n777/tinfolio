@@ -6,11 +6,13 @@ interface Props {
   title?: string;
   description?: string;
   home?: boolean;
+  staticNavigation?: boolean;
 }
 const {
   title = 'Yatin Rajesh — Systems, software & a curious mind.',
   description = 'Computer science student at PES University, Bengaluru. Exploring Linux systems, security, Android, and computer vision through useful, hands-on projects.',
   home = false,
+  staticNavigation = false,
 } = Astro.props;
 ---
 
@@ -44,7 +46,7 @@ const {
     <a href="#main" class="skip-link">
       Skip to content
     </a>
-    <Navigation home={home} client:load />
+    {staticNavigation ? <Navigation staticMode blog /> : <Navigation home={home} client:load />}
     <slot />
     <footer class="footer container">
       <a href="/" class="footer-brand">

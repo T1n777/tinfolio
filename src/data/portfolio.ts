@@ -1,5 +1,6 @@
 export const person = {
   name: 'Yatin Rajesh',
+  monogram: 'yr',
   email: 'yatinrajesh123@gmail.com',
   github: 'https://github.com/T1n777',
   linkedin: 'https://www.linkedin.com/in/yatin-rajesh-8a8aa1202/',

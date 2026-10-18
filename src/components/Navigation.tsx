@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react';
 import GlassSurface from './react-bits/GlassSurface';
 import GlassLink from './GlassLink';
+import { person } from '../data/portfolio';
 
-export default function Navigation({ home = false }: { home?: boolean }) {
+export default function Navigation({
+  home = false,
+  staticMode = false,
+  blog = false,
+}: {
+  home?: boolean;
+  staticMode?: boolean;
+  blog?: boolean;
+}) {
   const [active, setActive] = useState('');
   useEffect(() => {
     if (!home) return;
@@ -19,6 +28,27 @@ export default function Navigation({ home = false }: { home?: boolean }) {
     return () => observer.disconnect();
   }, [home]);
   const prefix = home ? '' : '/';
+  if (staticMode)
+    return (
+      <div className="nav-shell static-nav">
+        <nav className="navigation" aria-label="Main navigation">
+          <a className="monogram" href="/" aria-label={`${person.name}, home`}>
+            {person.monogram}<span>.</span>
+          </a>
+          <div className="nav-links">
+            <a href="/#work">Work</a>
+            <a href="/#about">About</a>
+            <a href="/#experience">Experience</a>
+            <a href="/blog/" aria-current={blog ? 'page' : undefined}>
+              Blog
+            </a>
+          </div>
+          <a href="/#contact" className="nav-contact">
+            Let’s talk
+          </a>
+        </nav>
+      </div>
+    );
   return (
     <div className="nav-shell">
       <GlassSurface
@@ -37,8 +67,8 @@ export default function Navigation({ home = false }: { home?: boolean }) {
         className="navigation-glass"
       >
         <nav className="navigation" aria-label="Main navigation">
-          <a className="monogram" href={home ? '#top' : '/'} aria-label="yr. — Yatin Rajesh, home">
-            yr<span>.</span>
+          <a className="monogram" href={home ? '#top' : '/'} aria-label={`${person.name}, home`}>
+            {person.monogram}<span>.</span>
           </a>
           <div className="nav-links">
             {['work', 'about', 'experience'].map((id) => (
@@ -50,6 +80,7 @@ export default function Navigation({ home = false }: { home?: boolean }) {
                 {id === 'work' ? 'Work' : id === 'about' ? 'About' : 'Experience'}
               </a>
             ))}
+            <a href="/blog/">Blog</a>
           </div>
           <GlassLink href={`${prefix}#contact`} label="Let’s talk" className="nav-contact" />
         </nav>
