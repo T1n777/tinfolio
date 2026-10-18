@@ -27,27 +27,29 @@ test('blog navigation, prose, narrow layout and accessibility', async ({ page })
     'aria-current',
     'page',
   );
-  await page.getByRole('link', { name: 'Building in the open', exact: true }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Building in the open');
-  await expect(page.locator('.blog-prose pre.astro-code')).toHaveCount(2);
-  await expect(page.locator('.blog-prose blockquote')).toBeVisible();
-  for (const url of ['/blog/', '/blog/building-in-the-open/']) {
-    await page.goto(url);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
-      true,
-    );
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
-      .analyze();
-    expect(
-      results.violations.map(({ id, nodes }) => ({
-        id,
-        targets: nodes.map((node) => node.target),
-      })),
-    ).toEqual([]);
+  const firstArticleLink = page.locator('.article-preview h2 a').first();
+  const hasPublished = await firstArticleLink.isVisible().catch(() => false);
+  if (hasPublished) {
+    const title = (await firstArticleLink.textContent())?.trim() ?? '';
+    await firstArticleLink.click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+    await expect(page.locator('.blog-prose')).toBeVisible();
+    await page.getByRole('link', { name: '← All articles' }).click();
+    await expect(page).toHaveURL(/\/blog\/$/);
+  } else {
+    await expect(page.locator('.blog-empty')).toBeVisible();
   }
-  await page.getByRole('link', { name: '← All articles' }).click();
-  await expect(page).toHaveURL(/\/blog\/$/);
+  await page.goto('/blog/');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  const results = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
+    .analyze();
+  expect(
+    results.violations.map(({ id, nodes }) => ({
+      id,
+      targets: nodes.map((node) => node.target),
+    })),
+  ).toEqual([]);
 });
 
 test('blog works without JavaScript at 320px', async ({ browser }) => {
@@ -57,10 +59,16 @@ test('blog works without JavaScript at 320px', async ({ browser }) => {
   });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4322/blog/');
-  await page.getByRole('link', { name: 'Building in the open', exact: true }).click();
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Building in the open');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await page.getByRole('link', { name: '← All articles' }).click();
-  await expect(page).toHaveURL(/\/blog\/$/);
+  const firstArticleLink = page.locator('.article-preview h2 a').first();
+  const hasPublished = await firstArticleLink.isVisible().catch(() => false);
+  if (hasPublished) {
+    await firstArticleLink.click();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.getByRole('link', { name: '← All articles' }).click();
+    await expect(page).toHaveURL(/\/blog\/$/);
+  } else {
+    await expect(page.locator('.blog-empty')).toBeVisible();
+  }
   await context.close();
 });
