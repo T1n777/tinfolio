@@ -25,7 +25,7 @@ Technically, it can. Tools like `tcpdump` traditionally use packet sockets (`AF_
 1. **Context Switches:** Every time packets arrive, the CPU must repeatedly switch execution contexts between kernel space and user space to wake up the monitoring application.
 2. **Memory Copies:** The kernel has to allocate a full socket buffer (`sk_buff`) and physically copy the packet payload across the kernel touserspace memory boundary.
 
-At modern line rates (10 Gbps, 40 Gbps, or higher—translating to millions of packets per second), the CPU spends nearly all its cycles copying packet memory and context switching rather than doing real work. The application quickly gets saturated, resulting in high latency and dropped packets.
+At modern line rates (10 Gbps, 40 Gbps, or higher translating to millions of packets per second), the CPU spends nearly all its cycles copying packet memory and context switching rather than doing real work. The application quickly gets saturated, resulting in high latency and dropped packets.
 
 ```mermaid
 flowchart TD
@@ -56,7 +56,7 @@ There are a few ways where we can essentially extend the functionality of the ke
    Very complex task. Beyond taking months or years to get changes upstreamed, making a single bug in your code means that even if it compiles, the kernel can panic and crash the entire system.
 
 2. **Kernel Modules (LKM)**
-   Arguably the most popular historical approach. Kernel modules are compiled against kernel headers, essentially becoming an extension of the kernel itself. However, they face the problem where they run with full Ring-0 privilege—if you make a single error (like a null pointer or memory leak), your entire kernel will crash.
+   Arguably the most popular historical approach. Kernel modules are compiled against kernel headers, essentially becoming an extension of the kernel itself. However, they face the problem where they run with full Ring-0 privilege if you make a single error (like a null pointer or memory leak), your entire kernel will crash.
 
 3. **eBPF**
    eBPF is arguably the best approach. It allows executing sandboxed programs inside the operating system kernel without changing kernel source code or loading crash prone kernel modules.
@@ -191,7 +191,7 @@ flowchart TD
 ```
 
 #### b) Trampoline / `fentry` (Modern method)
-In this method, kernel functions are compiled with a tiny amount of padding—a blank line of `NOP` (No Operation) instructions right at the start. Instead of triggering a slow CPU trap, the kernel rewrites that `NOP` line with a direct machine instruction: "Jump to trampoline address 0x1234". That trampoline bridge sets up the arguments, jumps directly to the eBPF program's native memory address, executes it, and cleanly bounces back to run the original kernel function with near zero overhead.
+In this method, kernel functions are compiled with a tiny amount of padding, a blank line of `NOP` (No Operation) instructions right at the start. Instead of triggering a slow CPU trap, the kernel rewrites that `NOP` line with a direct machine instruction: "Jump to trampoline address 0x1234". That trampoline bridge sets up the arguments, jumps directly to the eBPF program's native memory address, executes it, and cleanly bounces back to run the original kernel function with near zero overhead.
 
 ```mermaid
 flowchart TD
@@ -274,7 +274,7 @@ Without editing a single kernel file or loading a risky module, you just inserte
 
 ## Wrapping Up
 
-Extending the operating system kernel used to be an extreme trade-off: you either risked crashing the entire machine with a kernel module or accepted crippling performance hits by constantly moving data into userspace.
+Extending the operating system kernel used to be an extreme trade off: you either risked crashing the entire machine with a kernel module or accepted crippling performance hits by constantly moving data into userspace.
 
 eBPF completely changes that dynamic. By pairing an in-kernel static verifier with JIT compilation and event driven hooks, it gives us the best of both worlds: **near native execution speed with proven safety**.
 
