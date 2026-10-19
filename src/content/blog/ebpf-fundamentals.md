@@ -28,18 +28,20 @@ Technically, it can. Tools like `tcpdump` traditionally use packet sockets (`AF_
 At modern line rates (10 Gbps, 40 Gbps, or higher—translating to millions of packets per second), the CPU spends nearly all its cycles copying packet memory and context switching rather than doing real work. The application quickly gets saturated, resulting in high latency and dropped packets.
 
 ```mermaid
-flowchart LR
-    subgraph Traditional["1. Traditional Userspace Capture (e.g. tcpdump)"]
+flowchart TD
+    subgraph S1["1. Traditional Userspace Capture (e.g., tcpdump)"]
         direction TB
         P1["Packet Arrives at NIC"] --> K1["Kernel allocates sk_buff buffer"]
-        K1 -->|"Context switch & memory copy"| U1["Userspace Application<br/>(High CPU overhead, dropped packets)"]
+        K1 -->|"Context switch &<br/>packet copy"| U1["Userspace Application<br/>(High CPU overhead & dropped packets)"]
     end
 
-    subgraph InKernel["2. In-Kernel eBPF Processing"]
+    subgraph S2["2. In-Kernel eBPF Processing"]
         direction TB
-        P2["Packet Arrives at NIC"] --> E2["eBPF runs directly in kernel<br/>(Zero packet copies, zero context switches)"]
-        E2 --> M2["Only aggregated metrics sent to userspace via Maps"]
+        P2["Packet Arrives at NIC"] --> E2["eBPF Program runs in kernel<br/>(Zero packet copies, zero context switches)"]
+        E2 --> M2["Only aggregated metrics sent<br/>to userspace via eBPF Maps"]
     end
+
+    U1 ~~~ P2
 ```
 
 To achieve true line-rate performance and low-overhead observability, the filtering logic **must run inside the kernel**, directly where the network events occur.
