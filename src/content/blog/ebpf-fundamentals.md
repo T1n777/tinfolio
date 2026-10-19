@@ -16,6 +16,36 @@ So I went digging...
 
 ---
 
+## Why Not Just Capture in Userspace?
+
+The obvious question that comes up is: *"Why touch the kernel at all? Why can't a normal userspace application just capture and inspect packets like `tcpdump`?"*
+
+Technically, it can. Tools like `tcpdump` traditionally use packet sockets (`AF_PACKET`) to tap into network traffic. However, this approach hits a massive performance bottleneck at scale due to two key costs:
+
+1. **Context Switches:** Every time packets arrive, the CPU must repeatedly switch execution contexts between kernel space and user space to wake up the monitoring application.
+2. **Memory Copies:** The kernel has to allocate a full socket buffer (`sk_buff`) and physically copy the packet payload across the kernel-to-userspace memory boundary.
+
+At modern line rates (10 Gbps, 40 Gbps, or higher—translating to millions of packets per second), the CPU spends nearly all its cycles copying packet memory and context switching rather than doing real work. The application quickly gets saturated, resulting in high latency and dropped packets.
+
+```mermaid
+flowchart LR
+    subgraph Traditional["1. Traditional Userspace Capture (e.g. tcpdump)"]
+        direction TB
+        P1["Packet Arrives at NIC"] --> K1["Kernel allocates sk_buff buffer"]
+        K1 -->|"Context switch & memory copy"| U1["Userspace Application<br/>(High CPU overhead, dropped packets)"]
+    end
+
+    subgraph InKernel["2. In-Kernel eBPF Processing"]
+        direction TB
+        P2["Packet Arrives at NIC"] --> E2["eBPF runs directly in kernel<br/>(Zero packet copies, zero context switches)"]
+        E2 --> M2["Only aggregated metrics sent to userspace via Maps"]
+    end
+```
+
+To achieve true line-rate performance and low-overhead observability, the filtering logic **must run inside the kernel**, directly where the network events occur.
+
+---
+
 ## Extending the Linux Kernel: The Three Approaches
 
 There are a few ways where we can essentially extend the functionality of the kernel:
