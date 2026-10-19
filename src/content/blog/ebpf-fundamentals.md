@@ -23,7 +23,7 @@ The obvious question that comes up is: *"Why touch the kernel at all? Why can't 
 Technically, it can. Tools like `tcpdump` traditionally use packet sockets (`AF_PACKET`) to tap into network traffic. However, this approach hits a massive performance bottleneck at scale due to two key costs:
 
 1. **Context Switches:** Every time packets arrive, the CPU must repeatedly switch execution contexts between kernel space and user space to wake up the monitoring application.
-2. **Memory Copies:** The kernel has to allocate a full socket buffer (`sk_buff`) and physically copy the packet payload across the kernel-to-userspace memory boundary.
+2. **Memory Copies:** The kernel has to allocate a full socket buffer (`sk_buff`) and physically copy the packet payload across the kernel touserspace memory boundary.
 
 At modern line rates (10 Gbps, 40 Gbps, or higher—translating to millions of packets per second), the CPU spends nearly all its cycles copying packet memory and context switching rather than doing real work. The application quickly gets saturated, resulting in high latency and dropped packets.
 
@@ -44,7 +44,7 @@ flowchart TD
     U1 ~~~ P2
 ```
 
-To achieve true line-rate performance and low-overhead observability, the filtering logic **must run inside the kernel**, directly where the network events occur.
+To achieve true line rate performance and low overhead observability, the filtering logic **must run inside the kernel**, directly where the network events occur.
 
 ---
 
@@ -59,7 +59,7 @@ There are a few ways where we can essentially extend the functionality of the ke
    Arguably the most popular historical approach. Kernel modules are compiled against kernel headers, essentially becoming an extension of the kernel itself. However, they face the problem where they run with full Ring-0 privilege—if you make a single error (like a null pointer or memory leak), your entire kernel will crash.
 
 3. **eBPF**
-   eBPF is arguably the best approach. It allows executing sandboxed programs inside the operating system kernel without changing kernel source code or loading crash-prone kernel modules.
+   eBPF is arguably the best approach. It allows executing sandboxed programs inside the operating system kernel without changing kernel source code or loading crash prone kernel modules.
 
 ```mermaid
 flowchart TD
@@ -79,13 +79,13 @@ Here is how an eBPF program goes from user code to safe kernel execution:
 
 1. **You write the logic in C:** You write a small function describing what you want to do (e.g., "every time a packet arrives, read its destination port, and increment a counter in a table").
 
-2. **The kernel safety check (Verifier):** You compile that code into eBPF bytecode in userspace (using Clang/LLVM) and hand it to the Linux kernel via the `bpf()` system call. The kernel's verifier statically simulates every instruction to prove that your code will never crash the system, read out-of-bounds memory, or get stuck in an infinite loop.
+2. **The kernel safety check (Verifier):** You compile that code into eBPF bytecode in userspace (using Clang/LLVM) and hand it to the Linux kernel via the `bpf()` system call. The kernel's verifier statically simulates every instruction to prove that your code will never crash the system, read out of bounds memory, or get stuck in an infinite loop.
 
-3. **Hooking into the pipeline:** Once approved, the kernel turns that bytecode into native CPU instructions (via a JIT compiler) and attaches it to an event hook. In your packet example, that could be **XDP (eXpress Data Path)** at the network driver level for ultra-fast processing before memory is allocated, **TC (Traffic Control)** further up the Linux networking stack, or a **Socket Filter** right as packets reach a socket (like `tcpdump`).
+3. **Hooking into the pipeline:** Once approved, the kernel turns that bytecode into native CPU instructions (via a JIT compiler) and attaches it to an event hook. In your packet example, that could be **XDP (eXpress Data Path)** at the network driver level for ultra fast processing before memory is allocated, **TC (Traffic Control)** further up the Linux networking stack, or a **Socket Filter** right as packets reach a socket (like `tcpdump`).
 
-4. **Storing and sharing the data (Maps):** Because eBPF programs run and exit quickly every time an event happens, your program can't store data in normal local variables. Instead, it writes into an in-kernel data structure called an eBPF Map (a key-value table or ring buffer).
+4. **Storing and sharing the data (Maps):** Because eBPF programs run and exit quickly every time an event happens, your program can't store data in normal local variables. Instead, it writes into an in kernel data structure called an eBPF Map (a key-value table or ring buffer).
 
-5. **Userspace reads the result:** Your userspace app (written in Go, Python, C, or Rust) simply reads from that same Map to show you real-time packet statistics, without ever slowing down or modifying the core Linux kernel files.
+5. **Userspace reads the result:** Your userspace app (written in Go, Python, C, or Rust) simply reads from that same Map to show you real time packet statistics, without ever slowing down or modifying the core Linux kernel files.
 
 ```mermaid
 flowchart TD
@@ -149,7 +149,7 @@ Well, there are a few primary ways:
 
 ### 1. Pointer Lookups (Static Checkpoints / Tracepoints)
 
-This is a method where the kernel maintains an internal array or linked list of function pointers associated with a specific event. When we attach our program via `bpf()`, the address of the JIT-compiled eBPF code is registered into that list. When the kernel reaches this specific hook, it loops through the pointers and executes the attached eBPF programs.
+This is a method where the kernel maintains an internal array or linked list of function pointers associated with a specific event. When we attach our program via `bpf()`, the address of the JIT compiled eBPF code is registered into that list. When the kernel reaches this specific hook, it loops through the pointers and executes the attached eBPF programs.
 
 ```mermaid
 flowchart TD
@@ -191,7 +191,7 @@ flowchart TD
 ```
 
 #### b) Trampoline / `fentry` (Modern method)
-In this method, kernel functions are compiled with a tiny amount of padding—a blank line of `NOP` (No-Operation) instructions right at the start. Instead of triggering a slow CPU trap, the kernel rewrites that `NOP` line with a direct machine instruction: "Jump to trampoline address 0x1234". That trampoline bridge sets up the arguments, jumps directly to the eBPF program's native memory address, executes it, and cleanly bounces back to run the original kernel function with near-zero overhead.
+In this method, kernel functions are compiled with a tiny amount of padding—a blank line of `NOP` (No Operation) instructions right at the start. Instead of triggering a slow CPU trap, the kernel rewrites that `NOP` line with a direct machine instruction: "Jump to trampoline address 0x1234". That trampoline bridge sets up the arguments, jumps directly to the eBPF program's native memory address, executes it, and cleanly bounces back to run the original kernel function with near zero overhead.
 
 ```mermaid
 flowchart TD
@@ -250,7 +250,7 @@ flowchart TD
 
 ### The Easiest Way to Try It: bpftrace
 
-Compiling kernel C code requires setting up build tools and headers. But if you just want to see eBPF work on your machine right now, you can run the exact same logic using a high-level tool called `bpftrace`:
+Compiling kernel C code requires setting up build tools and headers. But if you just want to see eBPF work on your machine right now, you can run the exact same logic using a high level tool called `bpftrace`:
 
 ```bash
 sudo bpftrace -e 'tracepoint:syscalls:sys_enter_execve { printf("Process spawned: %s (PID %d)\n", comm, pid); }'
@@ -276,6 +276,6 @@ Without editing a single kernel file or loading a risky module, you just inserte
 
 Extending the operating system kernel used to be an extreme trade-off: you either risked crashing the entire machine with a kernel module or accepted crippling performance hits by constantly moving data into userspace.
 
-eBPF completely changes that dynamic. By pairing an in-kernel static verifier with JIT compilation and event-driven hooks, it gives us the best of both worlds: **near-native execution speed with proven safety**.
+eBPF completely changes that dynamic. By pairing an in-kernel static verifier with JIT compilation and event driven hooks, it gives us the best of both worlds: **near native execution speed with proven safety**.
 
-Whether you're building high-throughput network filters with XDP, gathering deep system observability with tracepoints, or securing cloud environments at line rate, eBPF turns the Linux kernel into an open, programmable runtime.
+Whether you're building high throughput network filters with XDP, gathering deep system observability with tracepoints, or securing cloud environments at line rate, eBPF turns the Linux kernel into an open, programmable runtime.
