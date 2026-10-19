@@ -81,7 +81,7 @@ Here is how an eBPF program goes from user code to safe kernel execution:
 
 2. **The kernel safety check (Verifier):** You compile that code into eBPF bytecode in userspace (using Clang/LLVM) and hand it to the Linux kernel via the `bpf()` system call. The kernel's verifier statically simulates every instruction to prove that your code will never crash the system, read out of bounds memory, or get stuck in an infinite loop.
 
-3. **Hooking into the pipeline:** Once approved, the kernel turns that bytecode into native CPU instructions (via a JIT compiler) and attaches it to an event hook. In your packet example, that could be **XDP (eXpress Data Path)** at the network driver level for ultra fast processing before memory is allocated, **TC (Traffic Control)** further up the Linux networking stack, or a **Socket Filter** right as packets reach a socket (like `tcpdump`).
+3. **Hooking into the pipeline:** Once approved, the kernel turns that bytecode into native CPU instructions (via a JIT compiler) and attaches it to an event hook. If we take packets as a example case, a hook could be **XDP (eXpress Data Path)** at the network driver level for ultra fast processing before memory is allocated, **TC (Traffic Control)** further up the Linux networking stack, or a **Socket Filter** right as packets reach a socket (like `tcpdump`).
 
 4. **Storing and sharing the data (Maps):** Because eBPF programs run and exit quickly every time an event happens, your program can't store data in normal local variables. Instead, it writes into an in kernel data structure called an eBPF Map (a key-value table or ring buffer).
 
