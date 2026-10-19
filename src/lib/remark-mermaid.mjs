@@ -79,7 +79,7 @@ export default function remarkMermaid() {
                 clusterBkg: '#0d1219',
                 clusterBorder: '#28313d',
                 edgeLabelBackground: '#0d1219',
-                fontFamily: 'Manrope, Arial, sans-serif',
+                fontFamily: 'Arial, sans-serif',
                 fontSize: '13px',
               },
             },

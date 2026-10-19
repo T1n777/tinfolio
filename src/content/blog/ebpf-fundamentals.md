@@ -29,16 +29,16 @@ At modern line rates (10 Gbps, 40 Gbps, or higher—translating to millions of p
 
 ```mermaid
 flowchart TD
-    subgraph S1["1. Traditional Userspace Capture (e.g., tcpdump)"]
+    subgraph S1["1. Traditional Userspace Capture"]
         direction TB
-        P1["Packet Arrives at NIC"] --> K1["Kernel allocates sk_buff buffer"]
-        K1 -->|"Context switch &<br/>packet copy"| U1["Userspace Application<br/>(High CPU overhead & dropped packets)"]
+        P1["Packet Arrives at NIC"] --> K1["Kernel allocates sk_buff"]
+        K1 -->|"Context switch &<br/>packet copy"| U1["Userspace Application<br/>(High CPU & dropped packets)"]
     end
 
     subgraph S2["2. In-Kernel eBPF Processing"]
         direction TB
-        P2["Packet Arrives at NIC"] --> E2["eBPF Program runs in kernel<br/>(Zero packet copies, zero context switches)"]
-        E2 --> M2["Only aggregated metrics sent<br/>to userspace via eBPF Maps"]
+        P2["Packet Arrives at NIC"] --> E2["eBPF Program runs in kernel<br/>(Zero copies, no context switches)"]
+        E2 --> M2["Aggregated metrics sent<br/>to userspace via eBPF Maps"]
     end
 
     U1 ~~~ P2

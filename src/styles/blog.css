@@ -204,6 +204,10 @@
   display: block;
   max-width: 100%;
   height: auto;
+  font-family: Arial, sans-serif !important;
+}
+.diagram-scroll svg :is(text, span, p, div) {
+  font-family: Arial, sans-serif !important;
 }
 @media (max-width: 760px) {
   .blog {
