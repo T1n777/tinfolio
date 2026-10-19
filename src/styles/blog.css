@@ -184,6 +184,27 @@
   padding: 10px;
   text-align: left;
 }
+.blog-diagram {
+  margin: 36px 0;
+  padding: 0;
+  background: #0d1219;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.diagram-scroll {
+  overflow-x: auto;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-overflow-scrolling: touch;
+}
+.diagram-scroll svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
 @media (max-width: 760px) {
   .blog {
     padding-top: 130px;
